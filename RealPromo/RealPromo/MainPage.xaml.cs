@@ -19,7 +19,7 @@ namespace RealPromo
             GetPromocoes();
             ListViewPromocao.ItemsSource = lista;
 
-            Device.StartTimer(new TimeSpan(00, 1, 00), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
                 lista.Add(new Promocao() { Empresa = "Carrefour", Chamada = $"Celulares em promoção - {DateTime.Now}", Regras = "10 unidades", EnderecoURL = "https://www.carrefrour.com.br" });
                 return true;
