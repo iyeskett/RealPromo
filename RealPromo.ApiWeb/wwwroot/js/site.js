@@ -1,14 +1,12 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/PromoHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/PromoHub").withAutomaticReconnect().build();
 
-connection.start()
-    .then(() => {
-        console.info("Connected");
-    })
-    .catch((err) => {
-        console.error(err.toString());
-    })
+start();
+
+connection.onclosed(async (err) => {
+    await start();
+})
 
 var btnCadastrar = document.querySelector("#btnCadastrar");
 
@@ -78,3 +76,14 @@ connection.on("ReceberPromocao", (promocao) => {
 
     container.insertBefore(containerPromo, container.firstChild);
 });
+
+function start() {
+    connection.start()
+        .then(() => {
+            console.info("Connected");
+        })
+        .catch((err) => {
+            console.error(err.toString());
+            setTimeout(() => start(), 5000)
+        })
+}

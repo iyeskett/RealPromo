@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace RealPromo.Services
 
         private async Task ConfigurarSignalRAsync(ObservableCollection<Promocao> lista)
         {
-            var connection = new HubConnectionBuilder().WithUrl("https://realpromoapiweb2023.azurewebsites.net/PromoHub").Build();
+            var connection = new HubConnectionBuilder().WithUrl("https://realpromoapiweb2023.azurewebsites.net/PromoHub").WithAutomaticReconnect().Build();
 
             connection.On<Promocao>("ReceberPromocao", (promocao) =>
             {
