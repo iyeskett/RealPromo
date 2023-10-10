@@ -4,7 +4,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/PromoHub").withAut
 
 start();
 
-connection.onclosed(async (err) => {
+connection.onclose(async (err) => {
     await start();
 })
 
